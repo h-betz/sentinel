@@ -1,0 +1,15 @@
+# AI Agent Framework
+pydantic-ai>=0.2.14
+
+# HTTP Client
+httpx>=0.28.0
+
+# Prometheus client for metrics access
+prometheus-api-client>=0.5.0
+
+# LangGraph for repair cycle state machine
+langgraph>=0.2.0
+
+# Settings
+pydantic-settings>=2.7.0
+python-dotenv>=1.0.1

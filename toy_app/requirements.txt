@@ -1,0 +1,25 @@
+# FastAPI and ASGI
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.9
+
+# Database
+sqlalchemy[asyncio]==2.0.25
+asyncpg==0.30.0
+alembic==1.13.1
+psycopg2-binary==2.9.10
+
+# Validation and Settings
+pydantic==2.10.3
+pydantic-settings==2.7.1
+email-validator==2.1.0.post1
+
+# HTTP Client
+httpx==0.28.1
+
+# Monitoring
+prometheus-client==0.21.1
+prometheus-fastapi-instrumentator==7.0.0
+
+# Development
+python-dotenv==1.0.1

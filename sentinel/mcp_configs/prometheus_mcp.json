@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "prometheus": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@idanfishman/prometheus-mcp@latest",
+        "stdio"
+      ],
+      "env": {
+        "PROMETHEUS_URL": "http://localhost:9090",
+        "ENABLE_QUERY_TOOLS": "true",
+        "ENABLE_DISCOVERY_TOOLS": "true"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+# Pre-Review Gates
+Before putting any change up for review, you MUST:
+1. Run `pytest` and confirm all tests pass. Do not open a PR if any tests are failing.
+2. Run `flake8` and confirm there are no linting errors.
+3. Run `black --check` and confirm formatting is compliant. If not, run `black` to fix, then re-verify.
+
+# Pull Request Rules
+- Each PR must fix one, and only one, problem. Do not bundle unrelated fixes or improvements.
+- Every PR description must include:
+  - A clear statement of what the problem was
+  - A clear statement of how it is being fixed
+- Branch names for fixes must follow the pattern: `fix/<short-problem-description>`
+  Example: `fix/payment-service-timeout`, `fix/n-plus-one-product-query`
+
+# Test-Driven Fix Workflow
+When you identify a bug or issue:
+1. Write a test that reproduces the failure FIRST (the test must fail before the fix)
+2. Then implement the fix
+3. Confirm the test now passes
+4. The PR must include the reproducing test — do not submit a fix without it
