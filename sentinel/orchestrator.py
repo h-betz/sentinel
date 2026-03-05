@@ -139,7 +139,7 @@ def _create_pr(
     error_type = str(error_context.get("type", "unknown")).replace(" ", "_").lower()
     timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
     branch = f"fix/{error_type}-{timestamp}"
-    app_root = "/Users/hunterbetz/workspace/sentinel"
+    app_root = "/Users/hunterbetz/workspace/sentinel/toy_app"
 
     try:
         subprocess.run(

@@ -19,7 +19,7 @@ class Sentry:
 
     def __init__(self):
         self.agent = Agent(
-            "anthropic:claude-3-5-sonnet",
+            "anthropic:claude-haiku-4-5-20251001",
             system_prompt="You are a Sentry. Your job is to check if the App is healthy.",
             output_type=Dict,
         )
@@ -50,7 +50,7 @@ class Sentry:
                     # Prometheus returns values as [timestamp, "value_string"]
                     # We convert the second element to a float (seconds -> milliseconds)
                     value_sec = float(results[0].get("value", {})[1])
-                    value_ms = round(value_sec / 1000, 2)
+                    value_ms = round(value_sec * 1000, 2)
                     if value_ms >= 500:
                         return {
                             "escalation": "ESCALATE",
@@ -86,7 +86,7 @@ class Sentry:
                         return {}
 
                     error_count = float(results[0].get("value", {})[1])
-                    if error_count >= 0:
+                    if error_count > 0:
                         return {
                             "escalation": "ESCALATE",
                             "error_type": "5xx_SPIKE",
