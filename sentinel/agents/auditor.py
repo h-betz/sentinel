@@ -116,7 +116,7 @@ class Auditor:
     async def run(self, proposal: ProposalPackage) -> AuditReport:
         deps = AuditorDeps(
             proposal=proposal,
-            app_root="/Users/hunterbetz/workspace/sentinel/toy_app",
+            app_root="/repo/toy_app",
         )
         prompt = (
             f"Review this proposal (iteration {proposal.iteration}):\n\n"

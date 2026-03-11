@@ -97,7 +97,7 @@ class Mechanic:
         iteration: int = 1,
     ) -> ProposalPackage:
         deps = MechanicDeps(
-            app_root="/Users/hunterbetz/workspace/sentinel/toy_app",
+            app_root="/repo/toy_app",
             error_context=error_context,
             audit_feedback=audit_feedback,
         )

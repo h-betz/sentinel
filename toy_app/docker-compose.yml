@@ -20,11 +20,11 @@ services:
   payment-service:
     build:
       context: payment_service
-      dockerfile: payment_service/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "8001:8001"
     environment:
-      - FAILURE_MODE=none
+      - FAILURE_MODE=random
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
       interval: 10s
@@ -33,7 +33,7 @@ services:
 
   api:
     build:
-      context: ..
+      context: .
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
@@ -98,9 +98,13 @@ services:
       context: ../sentinel
       dockerfile: ../sentinel/Dockerfile
     environment:
+      - PYTHONUNBUFFERED=1
       - PROMETHEUS_URL=http://prometheus:9090
-      - API_URL=http://api:8000
+      - SENTRY_URL=http://api:8000
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      - ../:/repo
     depends_on:
       prometheus:
         condition: service_healthy

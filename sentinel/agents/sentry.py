@@ -1,3 +1,5 @@
+import os
+
 import httpx
 from dataclasses import dataclass
 from pydantic_ai import Agent, RunContext
@@ -51,7 +53,7 @@ class Sentry:
                     # We convert the second element to a float (seconds -> milliseconds)
                     value_sec = float(results[0].get("value", {})[1])
                     value_ms = round(value_sec * 1000, 2)
-                    if value_ms >= 500:
+                    if value_ms >= 50:
                         return {
                             "escalation": "ESCALATE",
                             "error_type": "LATENCY_SPIKE",
@@ -98,7 +100,10 @@ class Sentry:
 
     async def run_audit(self, app_url) -> Dict:
         """Public method to start an observation task"""
-        deps = SentryDeps(app_url=app_url, prometheus_url="http://localhost:9090")
+        deps = SentryDeps(
+            app_url=app_url,
+            prometheus_url=os.environ.get("PROMETHEUS_URL", "http://localhost:9090"),
+        )
 
         # Start the monitoring run
         # The agent will call all of its @self.agent.tool functions here

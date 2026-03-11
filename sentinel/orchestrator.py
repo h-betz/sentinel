@@ -139,20 +139,20 @@ def _create_pr(
     error_type = str(error_context.get("type", "unknown")).replace(" ", "_").lower()
     timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
     branch = f"fix/{error_type}-{timestamp}"
-    app_root = "/Users/hunterbetz/workspace/sentinel/toy_app"
+    git_root = "/repo"
 
     try:
         subprocess.run(
             ["git", "checkout", "-b", branch],
-            cwd=app_root,
+            cwd=git_root,
             check=True,
             capture_output=True,
         )
 
         for changed_file in proposal.changed_files:
             subprocess.run(
-                ["git", "add", changed_file.path],
-                cwd=app_root,
+                ["git", "add", f"toy_app/{changed_file.path}"],
+                cwd=git_root,
                 check=True,
                 capture_output=True,
             )
@@ -163,14 +163,14 @@ def _create_pr(
         )
         subprocess.run(
             ["git", "commit", "-m", commit_msg],
-            cwd=app_root,
+            cwd=git_root,
             check=True,
             capture_output=True,
         )
 
         subprocess.run(
             ["git", "push", "-u", "origin", branch],
-            cwd=app_root,
+            cwd=git_root,
             check=True,
             capture_output=True,
         )
@@ -195,7 +195,7 @@ def _create_pr(
                 "--body",
                 pr_body,
             ],
-            cwd=app_root,
+            cwd=git_root,
             capture_output=True,
             text=True,
         )
@@ -222,6 +222,7 @@ async def run() -> None:
     sentry = Sentry()
     while True:
         error_context = await sentry.run_audit(app_url=os.environ.get("SENTRY_URL"))
+        print(f"[Orchestrator] Sentry result: {error_context}", flush=True)
         if error_context.get("escalation") == "ESCALATE":
             model = assess_problem(error_context)
             print(f"[Orchestrator] Escalation detected — starting repair with {model}")
